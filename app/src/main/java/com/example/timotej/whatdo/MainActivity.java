@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 extras.putDouble("lat",action.getLoc().getY());
                 intent.putExtras(extras);
                 startActivity(intent);
-
             }
         });
     }
@@ -138,6 +137,4 @@ public class MainActivity extends AppCompatActivity {
         location.setText(action.getLoc().name);
 
     }
-
-
 }

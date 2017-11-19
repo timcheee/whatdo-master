@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "289680457278",
+    "firebase_url": "https://whatdo-dbc53.firebaseio.com",
+    "project_id": "whatdo-dbc53",
+    "storage_bucket": "whatdo-dbc53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289680457278:android:8111ca3cdc558152",
+        "android_client_info": {
+          "package_name": "com.example.timotej.whatdo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289680457278-vu5bh6857m0u18uvq951hm4uudefkk4d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.timotej.whatdo",
+            "certificate_hash": "516846a703d587780fa1613cdc496019f53b44ab"
+          }
+        },
+        {
+          "client_id": "289680457278-vtg9m82ccfvuua714s6pjnpifm0rci79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM5G7HnncmAY8KmpW5DlZ1bCxa8u_GgYQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289680457278-vtg9m82ccfvuua714s6pjnpifm0rci79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

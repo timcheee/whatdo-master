@@ -23,6 +23,7 @@ public class MyApplication extends Application {
     MyActionList sez;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    //DatabaseReference activitiesRef;
     //DatabaseReference myRef = database.getReference("activities/");
 
     MyAction tmpAction;
@@ -35,13 +36,13 @@ public class MyApplication extends Application {
         super.onCreate();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("activities/");
+        myRef.keepSynced(true);
+
+        //activitiesRef = FirebaseDatabase.getInstance().getReference("activities");
+        //activitiesRef.keepSynced(true);
+
         tmpAction = new MyAction();
-          //  myRef.child("activities").push().setValue("neki");
-        /*Map<String,Object> activityMap = new HashMap<>();
-        activityMap.put("description","blablabla");
-        activityMap.put("endDate",2374232);
-        activityMap.put("idAction","57f3fec3b3be44248aba883c76a43e4f");
-        myRef.updateChildren(activityMap);*/
+        sez = new MyActionList();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -61,7 +62,7 @@ public class MyApplication extends Application {
             }
         });
 
-        //sez = new MyActionList();
+
         //app.save();
         //sez = new MyActionList();
         if(!load())

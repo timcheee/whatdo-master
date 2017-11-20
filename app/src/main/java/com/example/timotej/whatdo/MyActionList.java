@@ -11,12 +11,14 @@ public class MyActionList {
     //public static final String LOKACIJA_ID = "lokacija_idXX";
     ArrayList<MyAction> activities;
 
-    MyActionList() {/*
+    MyActionList() {
+        activities = new ArrayList<>();
+        /*
         long date1 = MyMain.getMillis("18.03.2017");
         long date2 = MyMain.getMillis("19.03.2017");
         long date3 = MyMain.getMillis("20.03.2017");
 
-        activities = new ArrayList<>();
+
         activities.add(new MyAction("Kino","Ogled filma Pr Hostarju",Location.RandomLocation(),new TagList(),MyMain.getRandomDate(),2374232,"19:00","21:00"));
         activities.add(new MyAction("Sprehod","Sprehod ob Dravi",Location.RandomLocation(),new TagList(),MyMain.getRandomDate(),8795795,"15:00",""));
         activities.add(new MyAction("Učenje","Učenje programiranja",Location.RandomLocation(),new TagList(),MyMain.getRandomDate(),46864757,"20:30",""));

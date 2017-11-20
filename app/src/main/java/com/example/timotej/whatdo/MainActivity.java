@@ -137,4 +137,11 @@ public class MainActivity extends AppCompatActivity {
         location.setText(action.getLoc().name);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        startActivity(new Intent(MainActivity.this, ListActivity.class));
+    }
 }

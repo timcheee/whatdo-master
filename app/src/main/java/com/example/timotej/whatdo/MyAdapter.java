@@ -41,19 +41,15 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayout, parent, false);
-        // set the view's size, margins, paddings and layout parameters
+
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
-    private static void startDView(String lokacijaID, Activity ac) { // <--------------Tu si ustau
-        //  System.out.println(name+":"+position);
-        Intent i = new Intent(ac.getBaseContext(), MainActivity.class);
-        //i.putExtra(MyActionList.LOKACIJA_ID,lokacijaID);
-        i.putExtra("neki",lokacijaID);
-        System.out.println("Lokacija ID: "+lokacijaID);
-        //i.putExtra(seznam.activities,  lokacijaID);
-        ac.startActivity(i);
+    private static void startDView(String lokacijaID, Activity ac) {
 
+        Intent i = new Intent(ac.getBaseContext(), MainActivity.class);
+        i.putExtra("neki",lokacijaID);
+        ac.startActivity(i);
     }
 
     @Override
@@ -77,6 +73,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return seznam.activities.size();
+        //if(seznam.activities != null)
+            return seznam.activities.size();
+        //else return  1;
     }
 }

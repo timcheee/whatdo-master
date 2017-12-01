@@ -32,14 +32,10 @@ public class MyApplication extends Application {
     private static final String FILE_NAME = "actions.json";
     @Override
     public void onCreate() {
-        //myRef.setValue("bla");
         super.onCreate();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("activities/");
         myRef.keepSynced(true);
-
-        //activitiesRef = FirebaseDatabase.getInstance().getReference("activities");
-        //activitiesRef.keepSynced(true);
 
         tmpAction = new MyAction();
         sez = new MyActionList();
@@ -53,7 +49,7 @@ public class MyApplication extends Application {
                     tmpAction = messageSnapshot.getValue(MyAction.class);
                     sez.activities.add(tmpAction);
                 }
-                //sez = dataSnapshot.getValue(MyActionList.class);
+                preveriVeljavnost();
             }
 
             @Override
@@ -62,15 +58,29 @@ public class MyApplication extends Application {
             }
         });
 
-
-        //app.save();
-        //sez = new MyActionList();
         if(!load())
         {
             sez = new MyActionList();
             //sez =
         }
     }
+
+    private void preveriVeljavnost() {
+        for(MyAction mA : sez.activities)
+        {
+            long currentDate = System.currentTimeMillis();
+            String maDate = MyMain.getStringDate(mA.getStartDate());
+            String maTime = mA.getStartTime();
+
+            long actionMillis = MyMain.getActionMillis(maDate,maTime);
+            if(actionMillis < currentDate)
+            {
+                myRef.child(mA.getIdAction()).removeValue();
+            }
+        }
+
+    }
+
     public void removeAction(MyAction a){
         for(int i=0;i<sez.activities.size();i++)
         {

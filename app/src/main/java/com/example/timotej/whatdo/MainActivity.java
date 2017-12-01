@@ -55,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Load menu
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
-
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -67,17 +65,14 @@ public class MainActivity extends AppCompatActivity {
                 //Save activity
                 AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
                 dialog.setCancelable(false);
-                //dialog.setTitle("Dialog on Android");
+
                 dialog.setMessage("Delete this entry?");
                 dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        //Action for "Delete".
-                        app.removeAction(action);
-                        startActivity(new Intent(MainActivity.this, ListActivity.class));
 
-                        //S tem se shrani v json datoteko
-                        app.save();
+                        app.myRef.child(action.idAction).removeValue();
+                        startActivity(new Intent(MainActivity.this, ListActivity.class));
                     }
                 })
                         .setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {

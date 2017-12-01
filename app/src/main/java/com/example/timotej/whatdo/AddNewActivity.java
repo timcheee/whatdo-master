@@ -85,7 +85,7 @@ public class AddNewActivity extends AppCompatActivity {
                 if(dateM < 10)
                     tmpM = "0"+(dateM+1);
                 else
-                    tmpM = ""+dateM;
+                    tmpM = ""+(dateM+1);
                 tmpY = ""+dateY;
                 dateFormat = tmpD+"."+tmpM+"."+tmpY;
                 //twDate.setText("Date "+dateFormat);

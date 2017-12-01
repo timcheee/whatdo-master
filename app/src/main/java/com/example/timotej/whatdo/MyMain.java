@@ -62,5 +62,22 @@ public class MyMain{
 
         return getMillis(randomDatum);
     }
+    public static long getActionMillis(String date, String time)
+    {
+        long actionMillis = 0;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+        formatter.setLenient(false);
+
+        String oldTime = date+", "+time;
+        Date oldDate = null;
+        try {
+            oldDate = formatter.parse(oldTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        actionMillis = oldDate.getTime();
+
+        return actionMillis;
+    }
 
 }

@@ -121,15 +121,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void update(MyAction action) {
         title.setText("" + action.getName());
-        date.setText("" + MyMain.getStringDate(action.getStartDate()));
-        if (action.getEndTime() == "") {
-            time.setText("" + action.getStartTime());
-        } else {
-            time.setText(action.getStartTime() + " - " + action.getEndTime());
-        }
-
+        date.setText("Date: " + MyMain.getStringDate(action.getStartDate()));
+        time.setText("Time: " + action.getStartTime());
         description.setText("" + action.getDescription());
-        location.setText(action.getLoc().name);
+        location.setText("Lokacija: "+action.getLoc().name);
 
     }
 

@@ -6,7 +6,8 @@ package com.example.timotej.whatdo;
 import java.util.Random;
 
 public class Location {
-    double x,y;
+    double x;
+    double y;
     String name; //a lahka dobim naslov, če mam x in y?
 
     public Location(){};
@@ -27,7 +28,7 @@ public class Location {
         return x;
     }
 
-    public void setX(long x) {
+    public void setX(double x) {
         this.x = x;
     }
 

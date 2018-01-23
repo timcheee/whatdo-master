@@ -1,11 +1,22 @@
 package com.example.timotej.whatdo;
 
+import android.*;
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.*;
+import android.location.Location;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,6 +34,9 @@ import org.osmdroid.views.overlay.OverlayItem;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 
 import java.util.ArrayList;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 
 import static com.example.timotej.whatdo.R.id.map;
 
@@ -41,6 +55,35 @@ public class AddLocationActivity extends AppCompatActivity {
     Button mNextButton;
     double lang = 46.5572215;
     double lat = 15.6358783;
+    private LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            lang = location.getLongitude();
+            lat = location.getLatitude();
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+    public LocationManager locationManager;
+
+
+
+    String provider;
+
+    @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +94,62 @@ public class AddLocationActivity extends AppCompatActivity {
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         setContentView(R.layout.activity_map);
 
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,mLocationListener);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
+                //location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                lat = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLongitude();
+                lang = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLatitude();
+            }
+        }
+        catch (Exception e){
+            Log.i("Napaka","Napaka pri pridobivanju lokacije");
+        }
+  /*
+            if (locationManager != null) {
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    //locationManager.removeUpdates(GPSListener.this);
+                }
+            }
+*/
+// Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1
+                        );
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 1, mLocationListener);
+        Log.i("Exception","Exception pri requestu lokacije");
+
+
         mNextButton = (Button) findViewById(R.id.nextButton);
         mNextButton.setClickable(false);
         mMapView = (MapView) findViewById(map);
@@ -59,6 +158,42 @@ public class AddLocationActivity extends AppCompatActivity {
         mMapView.setMultiTouchControls(true);
         IMapController mapController = mMapView.getController();
         mapController.setZoom(17);
+
+
+        LocationManager locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        LocationListener locListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                lang = location.getLongitude();
+                lat = location.getLatitude();
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 3, locListener);
 
         GeoPoint startPoint = new GeoPoint(lang,lat);
         mapController.setCenter(startPoint);
@@ -146,6 +281,7 @@ public class AddLocationActivity extends AppCompatActivity {
         MapEventsOverlay OverlayEvents = new MapEventsOverlay(getBaseContext(),mReceive);
         mMapView.getOverlays().add(OverlayEvents);
     }
+
     public void onResume(){
         super.onResume();
         //this will refresh the osmdroid configuration on resuming.

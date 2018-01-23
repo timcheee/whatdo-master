@@ -48,6 +48,7 @@ public class LocationActivity extends AppCompatActivity {
         //important! set your user agent to prevent getting banned from the osm servers
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         setContentView(R.layout.activity_map);
+
         Bundle extras = getIntent().getExtras();
          Double lang = extras.getDouble("lang");
          Double lat = extras.getDouble("lat");

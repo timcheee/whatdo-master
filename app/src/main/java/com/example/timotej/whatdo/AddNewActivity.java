@@ -107,7 +107,7 @@ public class AddNewActivity extends AppCompatActivity {
 
                 MyAction currentAction = new MyAction(etTitle.getText().toString(),etDescripion.getText().toString(),new Location(lang,lat,address),new TagList(),MyMain.getMillis(dateFormat),2374232,timeFormat,"");
                 app.sez.activities.add(currentAction);
-                app.save();
+                //app.save();
 
                 Map<String,Object> activityMap = new HashMap<>();
                 activityMap.put(currentAction.getIdAction(),currentAction);
